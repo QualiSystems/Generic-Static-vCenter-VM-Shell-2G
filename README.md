@@ -1,0 +1,1 @@
+# Generic-Static-vCenter-VM-Shell-2G
