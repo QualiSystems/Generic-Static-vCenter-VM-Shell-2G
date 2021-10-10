@@ -3,6 +3,7 @@ from cloudshell.cp.vcenter.commands.load_vm import VMLoader
 from cloudshell.cp.vcenter.common.model_factory import ResourceModelParser
 from cloudshell.cp.vcenter.common.vcenter.task_waiter import SynchronousTaskWaiter
 from cloudshell.cp.vcenter.common.vcenter.vmomi_service import pyVmomiService
+from cloudshell.cp.vcenter.network.dvswitch.name_generator import DvPortGroupNameGenerator
 from cloudshell.cp.vcenter.vm.ip_manager import VMIPManager
 from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterface
 from cloudshell.shell.core.driver_context import InitCommandContext, ResourceCommandContext, AutoLoadResource, \
@@ -24,8 +25,8 @@ class GenericStaticVcenterVMShell2GDriver(ResourceDriverInterface):
         self.model_parser = ResourceModelParser()
         self.ip_manager = VMIPManager()
         self.task_waiter = SynchronousTaskWaiter()
-        self.pv_service = pyVmomiService(SmartConnect, Disconnect, self.task_waiter, port_group_name_generator=None)
-        pass
+        self.pv_service = pyVmomiService(SmartConnect, Disconnect, self.task_waiter,
+                                         port_group_name_generator=DvPortGroupNameGenerator())
 
     def get_inventory(self, context):
         """ Will locate vm in vcenter and fill its uuid """
