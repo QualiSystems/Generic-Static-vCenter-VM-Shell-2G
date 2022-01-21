@@ -2,7 +2,7 @@ tosca_definitions_version: tosca_simple_yaml_1_0
 
 metadata:
   template_name: Generic Static vCenter VM Shell 2G
-  template_author: Anonymous
+  template_author: Quali
   template_version: 1.0.0
   template_icon: shell-icon.png
 
@@ -13,30 +13,23 @@ imports:
   - cloudshell_standard: cloudshell_deployed_app_standard_1_0_3.yaml
 
 node_types:
-
-  vendor.switch.Generic Static vCenter VM Shell 2G:
+  vendor.switch.Generic Static vCenter VM 2G:
     derived_from: cloudshell.nodes.DeployedApp
     properties:
       VM Name:
-        type: string          # optional values: string, integer, float, boolean, cloudshell.datatypes.Password
-        default:
+        type: string
         description: VM Name
       vCenter Resource Name:
-        type: string          # optional values: string, integer, float, boolean, cloudshell.datatypes.Password
-        default:
+        type: string
         description: Name of the existing vCenter Resource
-      vCenter Port:
-        type: integer          # optional values: string, integer, float, boolean, cloudshell.datatypes.Password
-        default: 443
-        description: vCenter Port
       GenericVPort.Requested vNIC Name:
-        type: string          # optional values: string, integer, float, boolean, cloudshell.datatypes.Password
+        type: string
         default:
         description: Interface vnic number
     capabilities:
       auto_discovery_capability:
         type: cloudshell.capabilities.AutoDiscovery
-        properties:        
+        properties:
           enable_auto_discovery:
             type: boolean
             default: true
@@ -46,24 +39,21 @@ node_types:
           inventory_description:
             type: string
             default: Describe the resource shell template
+          hide_address:
+            type: string
+            default: true
           Password:
             type: cloudshell.datatypes.Password
             default:
           User:
-            type: string          # optional values: string, integer, float, boolean, cloudshell.datatypes.Password
+            type: string
             default:
           VM Name:
-            type: string          # optional values: string, integer, float, boolean, cloudshell.datatypes.Password
-            default:
+            type: string
             description: VM Name
           vCenter Resource Name:
-            type: string          # optional values: string, integer, float, boolean, cloudshell.datatypes.Password
-            default:
+            type: string
             description: Name of the existing vCenter Resource
-          vCenter Port:
-            type: integer          # optional values: string, integer, float, boolean, cloudshell.datatypes.Password
-            default: 443
-            description: vCenter Port
     artifacts:
       icon:
         file: shell-icon.png
