@@ -1,4 +1,4 @@
-# Generic-Static-vCenter-VM-Shell-2G
+# Generic Static vCenter VM Shell 2G
 
 Release date: December 2021
 
