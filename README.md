@@ -2,7 +2,7 @@
 
 Release date: December 2021
 
-Shell version: 1.1.0
+Shell version: 1.2.0
 
 Document version: 1.0
 
