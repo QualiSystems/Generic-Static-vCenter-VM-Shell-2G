@@ -1,4 +1,4 @@
-<Driver Description="Describe the purpose of your CloudShell shell" MainClass="driver.GenericStaticVcenterVMShell2GDriver" Name="GenericStaticVcenterVMShell2GDriver" Version="1.0.0" PythonVersion="3">
+<Driver Description="Generic Static VM Shell" MainClass="driver.GenericStaticVMShell2GDriver" Name="GenericStaticVMShell2GDriver" Version="1.0.0" PythonVersion="3">
     <Layout>
          <Category Name="Hidden Commands">
             <Command Description="" DisplayName="Orchestration Save" Name="orchestration_save" />
