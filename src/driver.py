@@ -3,7 +3,7 @@ from __future__ import annotations
 from contextlib import contextmanager
 
 import jsonpickle
-from cloudshell.api.cloudshell_api import InputNameValue, CloudShellAPISession
+from cloudshell.api.cloudshell_api import CloudShellAPISession, InputNameValue
 from cloudshell.shell.core.driver_context import AutoLoadCommandContext, AutoLoadDetails
 from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterface
 from cloudshell.shell.core.session.cloudshell_session import CloudShellSessionContext
