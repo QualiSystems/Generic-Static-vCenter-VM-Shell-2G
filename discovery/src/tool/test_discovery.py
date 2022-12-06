@@ -5,8 +5,8 @@ from os import getenv
 
 from cloudshell.api.cloudshell_api import CloudShellAPISession
 
-from discovery.cp_discovery import DiscoverVms
-from discovery.cs_api_with_sandbox import CsApiWithSandbox, run_with_sandbox
+from discovery.src.tool.cp_discovery import DiscoverVms
+from discovery.src.tool.cs_api_with_sandbox import CsApiWithSandbox, run_with_sandbox
 
 
 def main():

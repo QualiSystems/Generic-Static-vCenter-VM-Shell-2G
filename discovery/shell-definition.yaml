@@ -1,0 +1,71 @@
+tosca_definitions_version: tosca_simple_yaml_1_0
+
+metadata:
+  template_name: Cloud Provider Autodiscovery Shell
+  template_author: Quali
+  template_version: 1.0.0
+  template_icon: shell-icon.png
+
+description: >
+  TOSCA based deployed app shell
+
+imports:
+  - cloudshell_standard: cloudshell_deployed_app_standard_1_0_3.yaml
+
+node_types:
+  vendor.resource.Cloud Provider Autodiscovery:
+    derived_from: cloudshell.nodes.DeployedApp
+    properties:
+      Cloud Provider Resource Name:
+        type: string
+        description: Name of the existing Cloud Provider Resource
+      Max Workers:
+        type: integer
+        description: Max number of workers to use for the discovery
+        default: 10
+      Discover Max VMs:
+        type: integer
+        description: Max number of VMs to discover
+        default: 100
+      Start Discover From Number:
+        type: integer
+        description: Start discovering from VM number
+        default: 0
+    capabilities:
+      auto_discovery_capability:
+        type: cloudshell.capabilities.AutoDiscovery
+        properties:
+          enable_auto_discovery:
+            type: boolean
+            default: true
+          auto_discovery_description:
+            type: string
+            default: Describe the auto discovery
+          inventory_description:
+            type: string
+            default: Describe the resource shell template
+          hide_address:
+            type: string
+            default: true
+          Cloud Provider Resource Name:
+            type: string
+            description: Name of the existing Cloud Provider Resource
+          Max Workers:
+            type: integer
+            description: Max number of workers to use for the discovery
+            default: 10
+          Discover Max VMs:
+            type: integer
+            description: Max number of VMs to discover
+            default: 100
+          Start Discover From Number:
+            type: integer
+            description: Start discovering from VM number
+            default: 0
+    artifacts:
+      icon:
+        file: shell-icon.png
+        type: tosca.artifacts.File
+      driver:
+        file: CloudProviderAutodiscovery2GDriver.zip
+        type: tosca.artifacts.File

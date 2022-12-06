@@ -1,0 +1,9 @@
+<Driver Description="Generic Static VM Shell" MainClass="driver.CloudProviderAutodiscovery2GDriver" Name="CloudProviderAutodiscovery2GDriver" Version="1.0.0" PythonVersion="3">
+    <Layout>
+         <Category Name="Hidden Commands">
+            <Command Description="" DisplayName="Orchestration Save" Name="orchestration_save" />
+            <Command Description="" DisplayName="Orchestration Restore" Name="orchestration_restore" />
+        </Category>
+        <Command DisplayName="Remove Discovered Resources" Name="remove_discovered_resources" Tags="allow_unreserved" />
+    </Layout>
+</Driver>

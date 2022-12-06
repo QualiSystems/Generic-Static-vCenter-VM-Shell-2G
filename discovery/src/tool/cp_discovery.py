@@ -16,8 +16,7 @@ from cloudshell.api.cloudshell_api import (
     ResourceAttributesUpdateRequest,
 )
 from cloudshell.api.common_cloudshell_api import CloudShellAPIError
-
-from discovery.cs_api_with_sandbox import CsApiWithSandbox
+from tool.cs_api_with_sandbox import CsApiWithSandbox
 
 
 class AutoloadFailed(Exception):
@@ -53,7 +52,7 @@ class DiscoverVms:
     api: CsApiWithSandbox
     logger: Logger
     max_workers: int = 10
-    discover_max_vms: int | None = None
+    discover_max_vms: int = 100
     start_discover_from_num: int = 0
 
     def __attrs_post_init__(self):
@@ -84,13 +83,9 @@ class DiscoverVms:
     def _limit_discovering_vms(
         self, vms: list[CloudProviderVmInfo]
     ) -> list[CloudProviderVmInfo]:
-        if self.discover_max_vms:
-            start = self.start_discover_from_num
-            stop = self.start_discover_from_num + self.discover_max_vms
-            vms = vms[start:stop]
-        else:
-            vms = vms[self.start_discover_from_num :]
-        return vms
+        start = self.start_discover_from_num
+        stop = self.start_discover_from_num + self.discover_max_vms
+        return vms[start:stop]
 
     @staticmethod
     def _create_folders(vms: list[CloudProviderVmInfo]) -> None:
