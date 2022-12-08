@@ -29,10 +29,6 @@ node_types:
         type: string
         default:
         description: Interface vnic number
-      GenericVPort.Private IP:
-        type: string
-        default: N/A
-        description: Private IP
       GenericVPort.Public IP:
         type: string
         default: N/A
