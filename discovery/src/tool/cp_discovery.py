@@ -16,7 +16,7 @@ from cloudshell.api.cloudshell_api import (
     ResourceAttributesUpdateRequest,
 )
 from cloudshell.api.common_cloudshell_api import CloudShellAPIError
-from tool.cs_api_with_sandbox import CsApiWithSandbox
+from cs_api_with_sandbox import CsApiWithSandbox
 
 
 class AutoloadFailed(Exception):
@@ -135,10 +135,15 @@ class DiscoverVms:
             names = [r.resource_path.name for r in resource_pool]
             self.api.add_to_reservation(names)
             self.logger.debug(f"{names} added to reservation")
-            self.api.refresh_vm_details(None)  # run for all Apps in reservation
-            self.logger.debug(f"VM details refreshed for {names}")
-            self.api.remove_from_reservation(names)
-            self.logger.debug(f"{names} removed from reservation")
+            try:
+                self.api.refresh_vm_details(None)  # run for all Apps in reservation
+            except Exception:
+                self.logger.exception("Failed to refresh VM details")
+            else:
+                self.logger.debug(f"VM details refreshed for {names}")
+            finally:
+                self.api.remove_from_reservation(names)
+                self.logger.debug(f"{names} removed from reservation")
 
     def _discover_resource_in_parallel(self, vm: CloudProviderVmInfo) -> None:
         self.logger.debug(f"Discovering VM {vm.path}")
