@@ -8,6 +8,7 @@ from cloudshell.shell.core.driver_context import (
 from cloudshell.shell.core.resource_driver_interface import ResourceDriverInterface
 from cloudshell.shell.core.session.cloudshell_session import CloudShellSessionContext
 from cloudshell.shell.core.session.logging_session import LoggingSessionContext
+from resource_config import StaticResourceConfig
 from tool.cp_discovery import DiscoverVms
 from tool.cs_api_with_sandbox import CsApiWithSandbox, run_with_sandbox
 
@@ -22,43 +23,39 @@ class CloudProviderAutodiscovery2GDriver(ResourceDriverInterface):
     def get_inventory(self, context: AutoLoadCommandContext) -> AutoLoadDetails:
         with LoggingSessionContext(context) as logger:
             api = CloudShellSessionContext(context).get_api()
+            r_configs = StaticResourceConfig.from_context(context)
 
-            with run_with_sandbox(api) as rid:
-                api = CsApiWithSandbox.create(api, rid)
-                tool = self._get_tool(context, api, logger)
-                tool.discover()
+            for r_config in r_configs:
+                with run_with_sandbox(api, r_config.cp_name) as rid:
+                    api = CsApiWithSandbox.create(api, rid)
+                    tool = self._get_tool(r_config, api, logger)
+                    tool.discover()
 
         return AutoLoadDetails([], [])
 
     def remove_discovered_resources(self, context: ResourceCommandContext):
         with LoggingSessionContext(context) as logger:
             api = CloudShellSessionContext(context).get_api()
+            r_config = StaticResourceConfig.from_context(context)[0]
 
-            with run_with_sandbox(api) as rid:
+            with run_with_sandbox(api, r_config.cp_name) as rid:
                 api = CsApiWithSandbox.create(api, rid)
-                tool = self._get_tool(context, api, logger)
+                tool = self._get_tool(r_config, api, logger)
                 tool.clear()
 
     @staticmethod
-    def _get_tool(context, api: CsApiWithSandbox, logger) -> DiscoverVms:
-        def _get_attr(name):
-            return context.resource.attributes[f"{namespace}{name}"]
-
-        namespace = f"{context.resource.model}."
-        cp_name = _get_attr("Cloud Provider Resource Name")
-        max_workers = int(_get_attr("Max Workers"))
-        discover_max_vms = int(_get_attr("Discover Max VMs"))
-        start_discover_from_num = int(_get_attr("Start Discover From Number"))
-
+    def _get_tool(
+        r_config: StaticResourceConfig, api: CsApiWithSandbox, logger
+    ) -> DiscoverVms:
         tool = DiscoverVms(
-            cp_name,
+            r_config.cp_name,
             "Generic Static VM 2G",
             "Generic Static VM 2G.GenericVPort",
             api,
             logger,
-            max_workers=max_workers,
-            discover_max_vms=discover_max_vms,
-            start_discover_from_num=start_discover_from_num,
+            max_workers=r_config.max_workers,
+            discover_max_vms=r_config.discover_max_vms,
+            start_discover_from_num=r_config.start_discover_from_num,
         )
         return tool
 

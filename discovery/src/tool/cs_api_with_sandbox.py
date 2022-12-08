@@ -57,9 +57,9 @@ class CsApiWithSandbox(CloudShellAPISession):
 
 
 @contextmanager
-def run_with_sandbox(api: CloudShellAPISession) -> str:
+def run_with_sandbox(api: CloudShellAPISession, cp_name: str) -> str:
     username = api.GetAllUsersDetails().Users[0].Name
-    r_name = "Quali CloudProvider Autodiscovery"
+    r_name = f"Quali CloudProvider Autodiscovery - {cp_name}"
     rid = api.CreateImmediateReservation(r_name, username, 120).Reservation.Id
     try:
         yield rid

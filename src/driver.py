@@ -32,7 +32,7 @@ class GenericStaticVMShell2GDriver(ResourceDriverInterface):
             }
             command_inputs = [InputNameValue(k, v) for k, v in params.items()]
 
-            with run_with_sandbox(api) as rid:
+            with run_with_sandbox(api, cp_name) as rid:
                 json_data = api.ExecuteCommand(
                     rid,
                     cp_name,
@@ -57,9 +57,9 @@ class GenericStaticVMShell2GDriver(ResourceDriverInterface):
 
 
 @contextmanager
-def run_with_sandbox(api: CloudShellAPISession) -> str:
+def run_with_sandbox(api: CloudShellAPISession, cp_name: str) -> str:
     username = api.GetAllUsersDetails().Users[0].Name
-    r_name = "Quali CloudProvider Autodiscovery"
+    r_name = f"Quali CloudProvider Autodiscovery - {cp_name}"
     reservations = api.GetCurrentReservations(username).Reservations
     for r in reservations:
         if r.Name == r_name:
