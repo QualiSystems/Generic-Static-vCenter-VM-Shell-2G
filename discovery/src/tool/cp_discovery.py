@@ -16,7 +16,7 @@ from cloudshell.api.cloudshell_api import (
     ResourceAttributesUpdateRequest,
 )
 from cloudshell.api.common_cloudshell_api import CloudShellAPIError
-from cs_api_with_sandbox import CsApiWithSandbox
+from tool.cs_api_with_sandbox import CsApiWithSandbox
 
 
 class AutoloadFailed(Exception):
