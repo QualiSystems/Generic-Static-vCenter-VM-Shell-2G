@@ -325,7 +325,7 @@ class ResourceFullPath:
 
 def get_valid_cs_name(name: str) -> str:
     # Valid chars are a-zA-Z0-9 .-|_[]
-    return re.sub(r"[^\w .-|_[\]]", "_", name)
+    return re.sub(r"[^\w .\-|_[\]]", "_", name)
 
 
 def get_resource_uniq_name(name: str) -> str:
@@ -379,3 +379,5 @@ def get_slices(iterable: Iterable[T], size: int) -> Iterable[list[T]]:
 
 assert get_resource_name_patter("vm name").match("vm name-c2d2")
 assert get_resource_name_patter("vm name").match("vm name")
+for name in ("Kali-test", "Kali.test", "Kali|test", "kali[test]"):
+    assert get_valid_cs_name(name) == name
